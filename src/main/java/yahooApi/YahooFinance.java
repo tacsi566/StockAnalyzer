@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import yahooApi.beans.Asset;
 import yahooApi.beans.YahooResponse;
+import yahooApi.exceptions.YahooException;
+import yahoofinance.Stock;
+import yahoofinance.histquotes.Interval;
 
 import javax.json.*;
 import java.io.*;
@@ -11,10 +14,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 public class YahooFinance {
+
+    private Stock s;
+    private Calendar calendar;
+
 
     public static final String URL_YAHOO = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=%s";
 
@@ -84,4 +92,5 @@ public class YahooFinance {
         }
         return result;
     }
+
 }

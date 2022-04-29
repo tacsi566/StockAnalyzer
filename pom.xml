@@ -63,6 +63,13 @@
             <version>1.4.200</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.yahoofinance-api</groupId>
+            <artifactId>YahooFinanceAPI</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+
+
 
         <!-- testing stuff -->
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
