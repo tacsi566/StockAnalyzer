@@ -1,5 +1,6 @@
 package stockanalyzer.ctrl;
 
+import downloader.Downloader;
 import stockanalyzer.ui.UserInterface;
 import yahooApi.YahooFinance;
 import yahooApi.beans.Quote;
@@ -53,6 +54,10 @@ public class Controller {
 		return quotes;
 	}
 
+
+	public void downloadTickers(List<String> tickers, Downloader downloader) throws YahooException {
+		downloader.process(tickers);
+	}
 
 	public void closeConnection() {
 		

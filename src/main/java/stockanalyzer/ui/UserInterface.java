@@ -4,8 +4,14 @@ package stockanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
+import downloader.Downloader;
+import downloader.ParallelDownloader;
+import downloader.SequentialDownloader;
 import stockanalyzer.ctrl.Controller;
+import yahooApi.exceptions.YahooException;
 
 public class UserInterface 
 {
@@ -28,7 +34,33 @@ public class UserInterface
 	}
 	
 	public void getDataForCustomInput() {
-		
+
+		List<String> tickers = Arrays.asList("AMZN", "BABA", "ABBV", "ZNGA", "AMD", "AAPL", "NIO", "INTC");
+		Downloader parallelDownloader = new ParallelDownloader();
+		Downloader sequentialDownloader = new SequentialDownloader();
+		long startTime, endTime;
+
+		try {
+			startTime = System.currentTimeMillis();
+			ctrl.downloadTickers(tickers, parallelDownloader);
+			endTime = System.currentTimeMillis();
+			System.out.println("Time for parallel downloading.");
+			System.out.println(endTime-startTime);
+
+
+			startTime = System.currentTimeMillis();
+			ctrl.downloadTickers(tickers, sequentialDownloader);
+			endTime = System.currentTimeMillis();
+			System.out.println("Time for sequential downloading.");
+			System.out.println(endTime-startTime);
+
+
+		}catch (YahooException e){
+			UserInterface.print(e.toString());
+		}
+
+		String tickersAsString = String.join(",", tickers);
+		ctrl.process(tickersAsString);
 	}
 
 
@@ -38,7 +70,7 @@ public class UserInterface
 		menu.insert("a", "AMZN", this::getDataFromCtrl1);
 		menu.insert("b", "BABA", this::getDataFromCtrl2);
 		menu.insert("c", "ABBV", this::getDataFromCtrl3);
-		menu.insert("d", "Choice User Imput:",this::getDataForCustomInput);
+		menu.insert("d", "Downloader",this::getDataForCustomInput);
 		menu.insert("z", "Choice User Imput:",this::getDataFromCtrl4);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
